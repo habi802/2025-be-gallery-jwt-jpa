@@ -1,0 +1,28 @@
+package kr.co.gallery_jwt_jpa.config.security;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration // Bean 등록, Bean 메소드가 있다.
+@RequiredArgsConstructor
+public class WebSecurityConfiguration {
+    // Bean 메소드
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // security
+                .httpBasic(httpBasicSpec -> httpBasicSpec.disable()) // 시큐리티가 제공해주는 인증 처리 -> 사용 안함
+                .formLogin(formLoginSpec -> formLoginSpec.disable()) // 시큐리티가 제공해주는 인증 처리 -> 사용 안함
+                .csrf(csrfSpec -> csrfSpec.disable()) // BE - csrf라는 공격을 막는 것이 기본으로 활성화 되어 있는데,
+                                                                              // 세션을 이용한 공격이다. 세션을 사용하지 않으니 비활성화
+                .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/cart").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/item").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .build();
+    }
+}
