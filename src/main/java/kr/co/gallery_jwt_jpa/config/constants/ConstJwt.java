@@ -2,11 +2,13 @@ package kr.co.gallery_jwt_jpa.config.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @ConfigurationProperties(prefix = "constants.jwt")
 @RequiredArgsConstructor
+@ToString
 public class ConstJwt {
     private final String issuer;
 
