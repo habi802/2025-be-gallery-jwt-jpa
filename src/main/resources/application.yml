@@ -1,0 +1,17 @@
+constants:
+  file:
+    directory: D:\SQL(04-14~)\backend\springboot\upload
+
+spring:
+  application:
+    name: gallery
+  datasource:
+    url: jdbc:mariadb://localhost/gallery
+    username: root
+    password: green502
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
