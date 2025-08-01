@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ToString
 public class ConstJwt {
     private final String issuer;
+    private final String bearerFormat;
 
     private final String claimKey;
     private final String secretKey;

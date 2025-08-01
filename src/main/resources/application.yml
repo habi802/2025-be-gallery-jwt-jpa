@@ -3,6 +3,8 @@ constants:
     directory: D:\SQL(04-14~)\backend\springboot\upload
   jwt:
     issuer: green502@green.com # ??? ??
+    bearer-format: JWT
+
     claim-key: signedUser
     secret-key: DaeguGreenArtAcademyClass502MsaClassStreetFighterKing
 
