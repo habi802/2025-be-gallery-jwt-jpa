@@ -7,10 +7,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration // Bean 등록, Bean 메소드가 있다.
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
+    private final TokenAuthenticationFilter tokenAuthenticationFilter;
+    private final TokenAuthenticationEntryPoint tokenAuthenticationEntryPoint;
+
     // Bean 메소드
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -23,6 +27,8 @@ public class WebSecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/v1/item").authenticated()
                         .anyRequest().permitAll()
                 )
+                .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(e -> e.authenticationEntryPoint(tokenAuthenticationEntryPoint))
                 .build();
     }
 }

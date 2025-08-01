@@ -27,6 +27,9 @@ public class CookieUtils {
 
     public String getValue(HttpServletRequest request, String name) {
         Cookie cookie = getCookie(request, name);
+        if (cookie == null) {
+            return null;
+        }
 
         return cookie.getValue();
     }
