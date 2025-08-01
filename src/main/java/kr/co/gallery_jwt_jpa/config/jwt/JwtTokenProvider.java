@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import kr.co.gallery_jwt_jpa.config.constants.ConstJwt;
@@ -38,7 +37,7 @@ public class JwtTokenProvider {
                 // payload
                 .issuer(constJwt.getIssuer())
                 .issuedAt(now) // 발행 일시(토큰 생성 일시)
-                .expiration(new Date(now.getDate() + tokenValidityMilliSecends)) // 만료 일시(토큰 만료 일시)
+                .expiration(new Date(now.getTime() + tokenValidityMilliSecends)) // 만료 일시(토큰 만료 일시)
                 .claim(constJwt.getClaimKey(), makeClaimByUserToJson(jwtUser))
                 // signature
                 .signWith(secretKey)
@@ -70,7 +69,7 @@ public class JwtTokenProvider {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
-                .parseClaimsJws(token)
+                .parseSignedClaims(token)
                 .getPayload();
     }
 }

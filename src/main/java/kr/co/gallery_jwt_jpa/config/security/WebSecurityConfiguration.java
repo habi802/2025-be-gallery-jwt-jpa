@@ -24,7 +24,7 @@ public class WebSecurityConfiguration {
                 .csrf(csrfSpec -> csrfSpec.disable()) // BE - csrf라는 공격을 막는 것이 기본으로 활성화 되어 있는데,
                                                                               // 세션을 이용한 공격이다. 세션을 사용하지 않으니 비활성화
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/cart").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/item").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/item").hasRole("USER_2")
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
