@@ -3,9 +3,12 @@ package kr.co.gallery_jwt_jpa.account;
 import kr.co.gallery_jwt_jpa.account.model.AccountJoinReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginRes;
+import kr.co.gallery_jwt_jpa.config.model.JwtUser;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,11 @@ public class AccountService {
         if (res == null || !BCrypt.checkpw(req.getLoginPw(), res.getLoginPw())) {
             return null; // 아이디가 없거나 비밀번호가 다르면 return null; 처리
         }
+
+        // 로그인 성공 시 사용자의 role 가져오기
+        List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
+        JwtUser jwtUser = new JwtUser(res.getId(), roles);
+        res.setJwtUser(jwtUser);
 
         return res;
     }

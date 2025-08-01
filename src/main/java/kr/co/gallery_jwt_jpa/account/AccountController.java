@@ -1,10 +1,12 @@
 package kr.co.gallery_jwt_jpa.account;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.gallery_jwt_jpa.account.etc.AccountConstants;
 import kr.co.gallery_jwt_jpa.account.model.AccountJoinReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginRes;
+import kr.co.gallery_jwt_jpa.config.jwt.JwtTokenManager;
 import kr.co.gallery_jwt_jpa.config.util.HttpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final JwtTokenManager jwtTokenManager;
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody AccountJoinReq req) {
@@ -32,14 +35,15 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AccountLoginReq req, HttpServletRequest httpReq) {
+    public ResponseEntity<?> login(@RequestBody AccountLoginReq req, HttpServletResponse response) {
         AccountLoginRes result = accountService.login(req);
         if (result == null) {
             return ResponseEntity.notFound().build();
         }
 
         // 세션 처리
-        HttpUtils.setSession(httpReq, AccountConstants.MEMBER_ID_NAME, result.getId());
+        //HttpUtils.setSession(httpReq, AccountConstants.MEMBER_ID_NAME, result.getId());
+        jwtTokenManager.issue(response, result.getJwtUser());
 
         return ResponseEntity.ok(result);
     }
