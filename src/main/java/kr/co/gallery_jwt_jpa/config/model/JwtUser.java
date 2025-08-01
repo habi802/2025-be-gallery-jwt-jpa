@@ -15,5 +15,4 @@ public class JwtUser {
 
     ROLE_USER, ROLE_ADMIN, ROLE_MANAGER, ROLE_LEVEL_1, ...
      */
-
 }

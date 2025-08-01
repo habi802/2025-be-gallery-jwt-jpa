@@ -39,7 +39,6 @@ public class JwtTokenManager {
         cookieUtils.deleteCookie(response, constJwt.getAccessTokenCookieName());
     }
 
-
     public String generateRefreshToken(JwtUser jwtUser) {
         return jwtTokenProvider.generateToken(jwtUser, constJwt.getRefreshTokenValidityMilliseconds());
     }
