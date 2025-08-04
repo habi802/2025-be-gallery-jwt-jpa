@@ -9,7 +9,9 @@ import io.jsonwebtoken.security.Keys;
 import kr.co.gallery_jwt_jpa.config.constants.ConstJwt;
 import kr.co.gallery_jwt_jpa.config.model.JwtUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -50,8 +52,7 @@ public class JwtTokenProvider {
         try {
             return objectMapper.writeValueAsString(jwtUser);
         } catch (JsonProcessingException e) {
-            // TODO: 예외 처리
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "토큰 생성 에러가 발생하였습니다.");
         }
     }
 
@@ -62,8 +63,7 @@ public class JwtTokenProvider {
 
             return objectMapper.readValue(json, JwtUser.class);
         } catch (JsonProcessingException e) {
-            // TODO: 예외 처리
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "토큰에 문제가 있습니다.");
         }
     }
 
