@@ -36,6 +36,7 @@ public class CartController {
     public ResponseEntity<?> findAll(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
         int logginedMemberId = userPrincipal.getMemberId();
+        log.info("memberId: {}", logginedMemberId);
         List<CartGetRes> result = cartService.findAll(logginedMemberId);
         log.info("result: {}", result);
         return ResponseEntity.ok(result);
