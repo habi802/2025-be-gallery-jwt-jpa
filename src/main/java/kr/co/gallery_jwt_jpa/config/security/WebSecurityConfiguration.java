@@ -25,6 +25,8 @@ public class WebSecurityConfiguration {
                                                                               // 세션을 이용한 공격이다. 세션을 사용하지 않으니 비활성화
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/cart").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/item").hasRole("USER_2")
+                        .requestMatchers("/api/v1/cart").authenticated()
+                        .requestMatchers("/api/v1/order").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
