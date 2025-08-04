@@ -27,6 +27,7 @@ public class WebSecurityConfiguration {
                 .formLogin(formLoginSpec -> formLoginSpec.disable()) // 시큐리티가 제공해주는 인증 처리 -> 사용 안함
                 .csrf(csrfSpec -> csrfSpec.disable()) // BE - csrf라는 공격을 막는 것이 기본으로 활성화 되어 있는데,
                                                                               // 세션을 이용한 공격이다. 세션을 사용하지 않으니 비활성화
+                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/cart").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/item").hasRole("USER_2")
                         .requestMatchers("/api/v1/cart").authenticated()
