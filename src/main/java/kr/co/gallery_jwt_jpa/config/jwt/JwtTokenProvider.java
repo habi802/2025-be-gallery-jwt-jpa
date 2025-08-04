@@ -28,17 +28,19 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성 메소드
-    public String generateToken(JwtUser jwtUser, int tokenValidityMilliSecends) {
+    public String generateToken(JwtUser jwtUser, long tokenValidityMilliSecends) {
         Date now = new Date(); // 기본 생성자로 Date 객체를 만들면 현재 일시 정보로 객체화
         return Jwts.builder()
                 // header
                 .header().type(constJwt.getBearerFormat())
                 .and()
+
                 // payload
                 .issuer(constJwt.getIssuer())
                 .issuedAt(now) // 발행 일시(토큰 생성 일시)
                 .expiration(new Date(now.getTime() + tokenValidityMilliSecends)) // 만료 일시(토큰 만료 일시)
                 .claim(constJwt.getClaimKey(), makeClaimByUserToJson(jwtUser))
+
                 // signature
                 .signWith(secretKey)
                 .compact();

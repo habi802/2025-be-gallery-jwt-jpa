@@ -14,6 +14,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class TokenAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    // 인증 문제가 발생되었을 때 commence 메소드 호출
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.error("commence error");
