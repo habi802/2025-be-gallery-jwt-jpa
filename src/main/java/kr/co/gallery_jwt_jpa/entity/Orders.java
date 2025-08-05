@@ -27,7 +27,7 @@ public class Orders extends Created {
     @Column(nullable = false, length = 10)
     private String payment;
 
-    @Column(nullable = false, length = 16)
+    @Column(length = 16)
     private String cardNumber;
 
     @Column(nullable = false)
