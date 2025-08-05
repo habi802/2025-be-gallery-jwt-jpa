@@ -1,11 +1,15 @@
 package kr.co.gallery_jwt_jpa.item;
 
+import kr.co.gallery_jwt_jpa.config.util.MyFileUtils;
 import kr.co.gallery_jwt_jpa.entity.Items;
 import kr.co.gallery_jwt_jpa.item.model.ItemGetRes;
+import kr.co.gallery_jwt_jpa.item.model.ItemPostReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +17,37 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
+    private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
+    private final MyFileUtils myFileUtils;
+
+    public int save(MultipartFile img, ItemPostReq req) {
+        String savedFileName = myFileUtils.makeRandomFileName(img); //저장할 파일명
+        //req.setImgPath(savedFileName);
+
+        Items item = new Items();
+        item.setImgPath(savedFileName);
+        item.setName(req.getName());
+        item.setPrice(req.getPrice());
+        item.setDiscountPer(req.getDiscountPer());
+
+        itemRepository.save(item);
+
+        //int result = itemMapper.save(req);
+
+        String directoryPath = String.format("/item/%d", item.getId());
+        myFileUtils.makeFolders(directoryPath);
+
+        String savedPathFileName = directoryPath + "/" + savedFileName;
+        try {
+            myFileUtils.transferTo(img, savedPathFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        return 1;
+    }
 
     public List<ItemGetRes> findAll(List<Long> ids){
         log.info("ids: {}", ids);

@@ -39,6 +39,9 @@ spring:
         format_sql: true # 쿼리문 로그를 찍어줄 때 보기 편하게 포맷팅
         order_updates: true # batch 작업 시 필요
         show_sql: true
+  servlet:
+    multipart:
+      max-file-size: 15MB
   sql:
     init:
       mode: always
