@@ -22,7 +22,7 @@ spring:
   application:
     name: gallery
   datasource:
-    url: jdbc:log4jdbc:mariadb://localhost/gallery
+    url: jdbc:log4jdbc:mariadb://localhost/gallery_jpa
     username: root
     password: green502
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
