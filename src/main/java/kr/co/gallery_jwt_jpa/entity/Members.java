@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -22,4 +24,7 @@ public class Members extends Created {
 
     @Column(nullable = false, length = 100)
     private String loginPw;
+
+    @OneToMany(mappedBy = "members", cascade = CascadeType.ALL)
+    private List<MembersRoles> roles;
 }
