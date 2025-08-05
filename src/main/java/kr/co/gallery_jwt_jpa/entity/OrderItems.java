@@ -14,7 +14,7 @@ public class OrderItems extends Created {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+    @ManyToOne
     @JoinColumn(name="order_id", nullable = false)
     private Orders orders;
 
