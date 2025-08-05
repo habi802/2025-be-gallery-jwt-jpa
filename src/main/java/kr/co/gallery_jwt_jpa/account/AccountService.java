@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
-    private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
 
     public void join(AccountJoinReq req) {
