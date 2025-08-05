@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,5 +27,14 @@ public class Members extends Created {
     private String loginPw;
 
     @OneToMany(mappedBy = "members", cascade = CascadeType.ALL)
-    private List<MembersRoles> roles;
+    private List<MembersRoles> roles = new ArrayList<>();
+
+    public void addRole(String roleName) {
+        MembersRolesIds membersRolesIds = new MembersRolesIds(roleName);
+        MembersRoles membersRoles = new MembersRoles();
+        membersRoles.setMembers(this);
+        membersRoles.setMembersRolesIds(membersRolesIds);
+
+        this.roles.add(membersRoles);
+    }
 }
