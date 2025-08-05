@@ -6,12 +6,14 @@ import kr.co.gallery_jwt_jpa.account.model.AccountLoginRes;
 import kr.co.gallery_jwt_jpa.config.model.JwtUser;
 import kr.co.gallery_jwt_jpa.entity.Members;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -53,6 +55,7 @@ public class AccountService {
         AccountLoginRes accountLoginRes = new AccountLoginRes();
         accountLoginRes.setJwtUser(jwtUser);
         accountLoginRes.setId(members.getId());
+        log.info("roles: {}", accountLoginRes.getJwtUser().getRoles());
 
         return accountLoginRes;
     }
