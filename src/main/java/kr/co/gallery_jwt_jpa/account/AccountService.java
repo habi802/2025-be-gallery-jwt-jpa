@@ -5,13 +5,10 @@ import kr.co.gallery_jwt_jpa.account.model.AccountLoginReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginRes;
 import kr.co.gallery_jwt_jpa.config.model.JwtUser;
 import kr.co.gallery_jwt_jpa.entity.Members;
-import kr.co.gallery_jwt_jpa.entity.MembersRoles;
-import kr.co.gallery_jwt_jpa.entity.MembersRolesIds;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,10 +17,8 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
 
-    public int join(AccountJoinReq req) {
+    public void join(AccountJoinReq req) {
         String hashedPw = BCrypt.hashpw(req.getLoginPw(), BCrypt.gensalt());
-
-        //AccountJoinReq changedReq = new AccountJoinReq(req.getName(), req.getLoginId(), hashedPw);
 
         Members members = new Members();
         members.setName(req.getName());
@@ -33,9 +28,6 @@ public class AccountService {
         members.addRole("ROLE_USER_1");
 
         accountRepository.save(members);
-
-        //return accountMapper.save(changedReq);
-        return 1;
     }
 
     public AccountLoginRes login(AccountLoginReq req) {

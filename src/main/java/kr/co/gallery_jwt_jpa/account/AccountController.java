@@ -2,12 +2,10 @@ package kr.co.gallery_jwt_jpa.account;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.gallery_jwt_jpa.account.etc.AccountConstants;
 import kr.co.gallery_jwt_jpa.account.model.AccountJoinReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginReq;
 import kr.co.gallery_jwt_jpa.account.model.AccountLoginRes;
 import kr.co.gallery_jwt_jpa.config.jwt.JwtTokenManager;
-import kr.co.gallery_jwt_jpa.config.util.HttpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +28,8 @@ public class AccountController {
             return ResponseEntity.badRequest().build();
         }
 
-        int result = accountService.join(req);
-        return ResponseEntity.ok(result);
+        accountService.join(req);
+        return ResponseEntity.ok(1);
     }
 
     @PostMapping("/login")
