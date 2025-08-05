@@ -16,7 +16,7 @@ public class MembersRoles {
     // 관계 설정
     // CascadeType.PERSIST: 영속성 전이
     // CascadeType.REMOVE: 부모 영속성이 delete 되면 본인도 delete
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @JoinColumn(name="member_id") // 컬럼명
     @MapsId("memberId")
     private Members members;
