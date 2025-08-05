@@ -10,6 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,18 +32,29 @@ public class AccountService {
     }
 
     public AccountLoginRes login(AccountLoginReq req) {
-        AccountLoginRes res = accountMapper.findByLoginId(req);
+        Members members = accountRepository.findByLoginId(req.getLoginId());
 
         // 비밀번호 체크
-        if (res == null || !BCrypt.checkpw(req.getLoginPw(), res.getLoginPw())) {
+        if (members == null || !BCrypt.checkpw(req.getLoginPw(), members.getLoginPw())) {
             return null; // 아이디가 없거나 비밀번호가 다르면 return null; 처리
         }
 
         // 로그인 성공 시 사용자의 role 가져오기
-        List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
-        JwtUser jwtUser = new JwtUser(res.getId(), roles);
-        res.setJwtUser(jwtUser);
+//        List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
+//        JwtUser jwtUser = new JwtUser(res.getId(), roles);
+//        res.setJwtUser(jwtUser);
+//
+//        return res;
+        List<String> roles = members.getRoles()
+                .stream()
+                .map(item -> item.getMembersRolesIds().getRoleName())
+                .collect(Collectors.toList());
+        JwtUser jwtUser = new JwtUser(members.getId(), roles);
 
-        return res;
+        AccountLoginRes accountLoginRes = new AccountLoginRes();
+        accountLoginRes.setJwtUser(jwtUser);
+        accountLoginRes.setId(members.getId());
+
+        return accountLoginRes;
     }
 }

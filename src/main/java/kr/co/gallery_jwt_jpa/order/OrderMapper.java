@@ -11,6 +11,6 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
     int save(OrderPostDto dto);
-    List<OrderGetRes> findAllByMemberIdOrderByIdDesc(int memberId);
+    List<OrderGetRes> findAllByMemberIdOrderByIdDesc(long memberId);
     OrderDetailGetRes findByOrderIdAndMemberId(OrderDetailGetReq req);
 }

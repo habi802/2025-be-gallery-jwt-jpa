@@ -25,25 +25,25 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody OrderPostReq req, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
         //log.info("req: {}", req);
-        int logginedMemberId = userPrincipal.getMemberId();
+        long logginedMemberId = userPrincipal.getMemberId();
         int result = orderService.saveOrder(req, logginedMemberId);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping
     public ResponseEntity<?> findAll(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         List<OrderGetRes> result = orderService.findAll(logginedMemberId);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{orderId}")
     public ResponseEntity<?> findDetail(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable int orderId) {
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         OrderDetailGetReq req = new OrderDetailGetReq();
         req.setOrderId(orderId);
         req.setMemberId(logginedMemberId);

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CartPostReq {
-    private int memberId;
+    private long memberId;
     private int itemId;
 }

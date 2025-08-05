@@ -24,7 +24,7 @@ public class CartService {
         }
     }
 
-    public List<CartGetRes> findAll(int memberId) {
+    public List<CartGetRes> findAll(long memberId) {
         return cartMapper.findAllWithItemByMemberId(memberId);
     }
 
@@ -32,7 +32,7 @@ public class CartService {
         return cartMapper.deleteByCartIdAndMemberId(req);
     }
 
-    public int removeCart(int memberId) {
+    public int removeCart(long memberId) {
         return cartMapper.deleteByMemberId(memberId);
     }
 }

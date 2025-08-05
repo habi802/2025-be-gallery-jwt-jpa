@@ -25,7 +25,7 @@ public class CartController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody CartPostReq req, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         log.info("req: {}", req);
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
         //req.setMemberId(logginedMemberId);
         req.setMemberId(userPrincipal.getMemberId());
         int result = cartService.save(req);
@@ -34,8 +34,8 @@ public class CartController {
 
     @GetMapping
     public ResponseEntity<?> findAll(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         log.info("memberId: {}", logginedMemberId);
         List<CartGetRes> result = cartService.findAll(logginedMemberId);
         log.info("result: {}", result);
@@ -44,8 +44,8 @@ public class CartController {
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<?> deleteMemberItem(@PathVariable int cartId, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         CartDeleteReq req = new CartDeleteReq(cartId, logginedMemberId);
         int result = cartService.removeItem(req);
         return ResponseEntity.ok(result);
@@ -53,8 +53,8 @@ public class CartController {
 
     @DeleteMapping
     public ResponseEntity<?> deleteMemberCart(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        //int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+        //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         int result = cartService.removeCart(logginedMemberId);
         return ResponseEntity.ok(result);
     }
