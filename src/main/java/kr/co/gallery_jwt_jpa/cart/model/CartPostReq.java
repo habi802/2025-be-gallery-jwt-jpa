@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class CartPostReq {
     private long memberId;
-    private int itemId;
+    private long itemId;
 }

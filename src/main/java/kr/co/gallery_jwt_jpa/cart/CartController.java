@@ -28,8 +28,9 @@ public class CartController {
         //long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
         //req.setMemberId(logginedMemberId);
         req.setMemberId(userPrincipal.getMemberId());
-        int result = cartService.save(req);
-        return ResponseEntity.ok(result);
+
+        cartService.save(req);
+        return ResponseEntity.ok(1);
     }
 
     @GetMapping
