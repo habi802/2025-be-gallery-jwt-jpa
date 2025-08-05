@@ -19,7 +19,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<?> readAll(@RequestParam(name = "id", required = false) List<Integer> ids) {
+    public ResponseEntity<?> readAll(@RequestParam(name = "id", required = false) List<Long> ids) {
         log.info("params: {}", ids);
         List<ItemGetRes> items = itemService.findAll(ids);
         return ResponseEntity.ok(items);
